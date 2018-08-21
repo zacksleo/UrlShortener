@@ -14,9 +14,9 @@ This library allows you to shorten a URL, reverse is also possible.
 **Basic Docs**
 
 * [Installation](#installation)
+* [Baidu API](#baidu-api)
 * [Bit.ly API](#bitly-api)
 * [Google API](#google-api)
-* [Baidu API](#baidu-api)
 * [Sina API](#sina-api)
 * [Wechat API](#wechat-api)
 * [Chain providers](#chain-providers)
@@ -48,6 +48,76 @@ $ php composer.phar update mremi/url-shortener
 ```
 
 Composer will install the library to your project's `vendor/mremi` directory.
+
+<a name="baidu-api"></a>
+
+## Baidu API
+
+### Shorten
+
+```php
+<?php
+
+use Mremi\UrlShortener\Model\Link;
+use Mremi\UrlShortener\Provider\Baidu\BaiduProvider;
+
+$link = new Link;
+$link->setLongUrl('http://www.google.com');
+
+$baiduProvider = new BaiduProvider(
+    array('connect_timeout' => 1, 'timeout' => 1)
+);
+
+$baiduProvider->shorten($link);
+```
+
+You can also use the commands provided by this library, look at the help message:
+
+```bash
+$ bin/shortener baidu:shorten --help
+```
+
+```bash
+$ bin/shortener baidu:shorten http://www.google.com
+```
+
+Some options are available:
+
+```bash
+$ bin/shortener baidu:shorten http://www.google.com --options='{"connect_timeout":1,"timeout":1}'
+```
+
+### Expand
+
+```php
+<?php
+
+use Mremi\UrlShortener\Model\Link;
+use Mremi\UrlShortener\Provider\Baidu\BaiduProvider;
+
+$link = new Link;
+$link->setShortUrl('http://dwz.cn/dDlVEAt5');
+
+$googleProvider = new BaiduProvider(
+    array('connect_timeout' => 1, 'timeout' => 1)
+);
+
+$googleProvider->expand($link);
+```
+
+```bash
+$ bin/shortener baidu:expand --help
+```
+
+```bash
+$ bin/shortener baidu:expand http://dwz.cn/dDlVEAt5
+```
+
+Some options are available:
+
+```bash
+$ bin/shortener baidu:expand http://dwz.cn/dDlVEAt5 --options='{"connect_timeout":1,"timeout":1}'
+```
 
 <a name="bitly-api"></a>
 
@@ -211,74 +281,6 @@ Some options are available:
 
 ```bash
 $ bin/shortener google:expand http://goo.gl/fbsS --options='{"connect_timeout":1,"timeout":1}'
-```
-
-<a name="baidu-api"></a>
-
-## Baidu API
-
-### Shorten
-
-```php
-<?php
-
-use Mremi\UrlShortener\Model\Link;
-use Mremi\UrlShortener\Provider\Baidu\BaiduProvider;
-
-$link = new Link;
-$link->setLongUrl('http://www.google.com');
-
-$baiduProvider = new BaiduProvider(
-    array('connect_timeout' => 1, 'timeout' => 1)
-);
-
-$baiduProvider->shorten($link);
-```
-
-You can also use the commands provided by this library, look at the help message:
-
-```bash
-$ bin/shortener baidu:shorten --help
-
-```bash
-$ bin/shortener baidu:shorten http://www.google.com
-```
-
-Some options are available:
-
-```bash
-$ bin/shortener baidu:shorten http://www.google.com --options='{"connect_timeout":1,"timeout":1}'
-```
-
-### Expand
-
-```php
-<?php
-
-use Mremi\UrlShortener\Model\Link;
-use Mremi\UrlShortener\Provider\Baidu\BaiduProvider;
-
-$link = new Link;
-$link->setShortUrl('http://dwz.cn/dDlVEAt5');
-
-$googleProvider = new BaiduProvider(
-    array('connect_timeout' => 1, 'timeout' => 1)
-);
-
-$googleProvider->expand($link);
-```
-
-```bash
-$ bin/shortener baidu:expand --help
-
-```bash
-$ bin/shortener baidu:expand http://dwz.cn/dDlVEAt5
-```
-
-Some options are available:
-
-```bash
-$ bin/shortener baidu:expand http://dwz.cn/dDlVEAt5 --options='{"connect_timeout":1,"timeout":1}'
 ```
 
 <a name="sina-api"></a>

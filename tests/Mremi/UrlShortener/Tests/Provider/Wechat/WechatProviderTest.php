@@ -26,6 +26,27 @@ class WechatProviderTest extends \PHPUnit_Framework_TestCase
     private $provider;
 
     /**
+     * Initializes the provider.
+     */
+    protected function setUp()
+    {
+        $auth = $this->getMock('Mremi\UrlShortener\Provider\Bitly\AuthenticationInterface');
+
+        $this->provider = $this->getMockBuilder('Mremi\UrlShortener\Provider\Wechat\WechatProvider')
+            ->setConstructorArgs(array($auth))
+            ->setMethods(array('createClient'))
+            ->getMock();
+    }
+
+    /**
+     * Cleanups the provider.
+     */
+    protected function tearDown()
+    {
+        $this->provider = null;
+    }
+
+    /**
      * Tests the shorten method throws exception if Wechat returns a string.
      *
      * @expectedException        \Mremi\UrlShortener\Exception\InvalidApiResponseException
@@ -112,27 +133,6 @@ JSON;
         //$this->mockClient($this->getMockResponseAsString());
 
         $this->provider->expand($this->getBaseMockLink());
-    }
-
-    /**
-     * Initializes the provider.
-     */
-    protected function setUp()
-    {
-        $auth = $this->getMock('Mremi\UrlShortener\Provider\Bitly\AuthenticationInterface');
-
-        $this->provider = $this->getMockBuilder('Mremi\UrlShortener\Provider\Wechat\WechatProvider')
-            ->setConstructorArgs(array($auth))
-            ->setMethods(array('createClient'))
-            ->getMock();
-    }
-
-    /**
-     * Cleanups the provider.
-     */
-    protected function tearDown()
-    {
-        $this->provider = null;
     }
 
     /**

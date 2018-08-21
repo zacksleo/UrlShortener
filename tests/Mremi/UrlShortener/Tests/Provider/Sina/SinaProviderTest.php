@@ -26,6 +26,24 @@ class SinaProviderTest extends \PHPUnit_Framework_TestCase
     private $provider;
 
     /**
+     * Initializes the provider.
+     */
+    protected function setUp()
+    {
+        $this->provider = $this->getMockBuilder('Mremi\UrlShortener\Provider\Sina\SinaProvider')
+            ->setMethods(array('createClient'))
+            ->getMock();
+    }
+
+    /**
+     * Cleanups the provider.
+     */
+    protected function tearDown()
+    {
+        $this->provider = null;
+    }
+
+    /**
      * Tests the shorten method throws exception if Sina returns a string.
      *
      * @expectedException        \Mremi\UrlShortener\Exception\InvalidApiResponseException
@@ -248,24 +266,6 @@ JSON;
         $this->mockClient($response, 'get');
 
         $this->provider->expand($link);
-    }
-
-    /**
-     * Initializes the provider.
-     */
-    protected function setUp()
-    {
-        $this->provider = $this->getMockBuilder('Mremi\UrlShortener\Provider\Sina\SinaProvider')
-            ->setMethods(array('createClient'))
-            ->getMock();
-    }
-
-    /**
-     * Cleanups the provider.
-     */
-    protected function tearDown()
-    {
-        $this->provider = null;
     }
 
     /**
